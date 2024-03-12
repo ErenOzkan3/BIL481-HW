@@ -38,8 +38,8 @@ public class AppTest {
     }
 
     @Test
-    public void testForOutOfRangeCipherIndex(){
-        cipherList = new ArrayList<>(Arrays.asList(1, 2, 3, 38));
+    public void testForValueZeroCipherIndex(){
+        cipherList = new ArrayList<>(Arrays.asList(1, 2, 3, 0));
         replaceList = new ArrayList<>(Arrays.asList(1, 3, 5, 7));
         c = 'x';
         text = "mks";
