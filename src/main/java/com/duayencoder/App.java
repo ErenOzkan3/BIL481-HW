@@ -109,7 +109,7 @@ public class App {
             cipheredText = text;
 
             for (int i = 0; i < cipherIndex.size() ; i++){
-                if((cipherIndex.get(i) <= 26) && (cipherIndex.get(i) > 0))
+                if((cipherIndex.get(i) > 0))
                     cipheredText = cipherText(cipheredText, cipherIndex.get(i));
                 else
                     return false;            
