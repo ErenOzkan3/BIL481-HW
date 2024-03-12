@@ -14,15 +14,25 @@ public class App {
 
     //Takes a String and applies ceaser cipher with mod cipherIndex cipherIndex.size() times
     //then changes the value at replaceIndex with char c (replaceIndex.get(i) > 0 && replaceIndex.get(i) < text.length())
-    public static String makeSomeMeaningfulComputationOnSetOfStrings(ArrayList<Integer> cipherIndex, String text, char c, ArrayList<Integer> replaceIndex){
+    public static boolean makeSomeMeaningfulComputationOnSetOfStrings(ArrayList<Integer> cipherIndex, String text, char c, ArrayList<Integer> replaceIndex){
         String cipheredText = null;
+        boolean status = true;
+
+        for (int i = 0; i < text.length(); i++){
+            if(Character.isAlphabetic(text.charAt(i))){
+                return false;    
+            }
+        }
+
 
         if( (cipherIndex.size() > 0) && (text.length() > 0) ){
-            cipheredText = text;
+            cipheredText = text.toLowerCase();
 
             for (int i = 0; i < cipherIndex.size() ; i++){
-                if(cipherIndex.get(i) <= 26)
-                    cipheredText = cipherText(cipheredText, cipherIndex.get(i));            
+                if((cipherIndex.get(i) <= 26) && (cipherIndex.get(i) > 0))
+                    cipheredText = cipherText(cipheredText, cipherIndex.get(i));
+                else
+                    return false;            
             }
 
             for(int i = 0; i < replaceIndex.size(); i++){
@@ -31,30 +41,28 @@ public class App {
                     tempArray[replaceIndex.get(i)] = c;
 
                     cipheredText = new String(tempArray);
+                }else{
+                    return false;
                 }
             }
         }
 
-        return cipheredText;
+        return status;
     }
 
     public static String cipherText(String s, int mod){
         StringBuilder sb = new StringBuilder();
+        s = s.toLowerCase();
         int value = 0;
 
         for(int i = 0; i < s.length(); i++){
-            if (Character.isUpperCase(s.charAt(i))){
-                value = ((int) s.charAt(i) + mod - 65) % 26 + 65;
-                char ch = (char) value;
-                sb.append(ch);
-            }else{
-                value = ((int)s.charAt(i) + mod - 97) % 26 + 97;
-                char ch = (char) value;
-                sb.append(ch);
-            }
-            
             if (Character.isWhitespace(s.charAt(i))){
                 sb.append(s.charAt(i));
+            }else{
+                value = s.charAt(i) - 'a';
+                value = (value + mod) % 26;
+                char ch = (char) ('a' + value);
+                sb.append(ch);    
             }
         }
         return sb.toString();
